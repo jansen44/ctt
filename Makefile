@@ -11,6 +11,9 @@ SRC=$(wildcard src/*.c)
 _OBJ=$(patsubst src/%.c, %, $(SRC))
 OBJ=$(patsubst %, $(OBJ_DIR)/%.o, $(_OBJ))
 
+run: build
+	$(TARGET)
+
 build: $(TARGET_DIR) $(OBJ_DIR) $(_OBJ) link
 
 link: $(OBJ) 
