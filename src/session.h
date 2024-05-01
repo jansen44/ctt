@@ -1,6 +1,7 @@
 #ifndef _CTT_SESSION_
 #define _CTT_SESSION_
 
+#include "session_history.h"
 #include "session_lock.h"
 #include "time.h"
 

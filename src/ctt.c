@@ -1,7 +1,6 @@
 #include "cli.h"
 #include "os.h"
 #include "session.h"
-#include "time.h"
 
 #include <stdio.h>
 

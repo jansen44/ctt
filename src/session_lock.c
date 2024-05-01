@@ -7,10 +7,11 @@ void get_lock_path(char *path, size_t max_path_size) {
 }
 
 int init_lock(char *lock_path) {
-  FILE *f = fopen(lock_path, "w+x");
+  FILE *f = fopen(lock_path, "wx");
   if (f == NULL) {
     return errno;
   }
+  fclose(f);
   return 0;
 }
 

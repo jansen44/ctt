@@ -18,9 +18,13 @@ void get_ctt_dir_path(char *path, size_t max_path_size) {
   strlcat(path, "/.local/share/ctt", max_path_size);
 }
 
-static int create_dir_if_not_exist(char *path) {
+int check_file_exists(char *path) {
   struct stat st = {0};
-  if (stat(path, &st) == -1) {
+  return stat(path, &st) != -1;
+}
+
+static int create_dir_if_not_exist(char *path) {
+  if (!check_file_exists(path)) {
     return mkdir(path, 0700);
   }
   return 0;
