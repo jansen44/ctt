@@ -23,10 +23,9 @@ void session_report(struct session *session) {
   time_t now = now_in_millis();
   time_t diff = time_diff_s(session->lock.created_at, now);
 
-  char time_out[11] = {0};
-  fmt_secs_to_str(diff, time_out);
-
-  printf(":: Session Duration:\t%s\n\n", time_out);
+  char session_time_output[9] = {0};
+  fmt_secs_to_str(diff, session_time_output);
+  printf(":: Session Duration:\t\t%s\n", session_time_output);
 }
 
 int complete_session(struct session *session) {
