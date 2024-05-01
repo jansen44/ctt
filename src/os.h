@@ -9,7 +9,7 @@
 
 #define MAX_PATH_SIZE 255
 
-void ctt_lock_path(char *path, size_t max_path_size);
+void get_ctt_dir_path(char *path, size_t max_path_size);
 
 int initialize_ctt_dirs();
 
