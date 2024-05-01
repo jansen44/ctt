@@ -55,6 +55,8 @@ int complete_session(struct session *session) {
   if (append_result != 0) {
     return append_result;
   }
+
+  destroy_lock();
   printf(":: Session Complete!\n");
   return 0;
 }

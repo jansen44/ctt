@@ -15,4 +15,6 @@ int init_lock(char *lock_path);
 int get_lock(char *lock_path, struct lock *lock);
 void get_lock_path(char *path, size_t max_path_size);
 
+int destroy_lock();
+
 #endif

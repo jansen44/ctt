@@ -1,5 +1,4 @@
 #include "session_lock.h"
-#include <stdio.h>
 
 void get_lock_path(char *path, size_t max_path_size) {
   get_ctt_dir_path(path, max_path_size);
@@ -30,4 +29,17 @@ int get_lock(char *lock_path, struct lock *lock) {
 
   lock->created_at = time;
   return 0;
+}
+
+int destroy_lock() {
+  char lock_path[MAX_PATH_SIZE] = {0};
+  get_lock_path(lock_path, MAX_PATH_SIZE);
+
+  int output = remove(lock_path);
+
+  if (output != 0) {
+    fprintf(stderr, ":: [WARN] Some error occured while deleting the lock "
+                    "file, you may need to delete it manually.");
+  }
+  return output;
 }
