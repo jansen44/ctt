@@ -1,35 +1,27 @@
 #include "os.h"
 
 static int create_dir_if_not_exist(char *path);
+static void ctt_dir_path(char *path, size_t max_path_size);
 
-char *ctt_cfg_path() {
-  char *home = getenv("HOME");
-  char *path = (char *)malloc(MAX_PATH_SIZE);
-  strncat(path, home, MAX_PATH_SIZE);
-  strncat(path, "/.local/share/ctt", MAX_PATH_SIZE);
-  return path;
-}
-
-char *ctt_data_path() {
-  char *path = ctt_cfg_path();
-  strncat(path, "/data", MAX_PATH_SIZE);
-  return path;
+void ctt_lock_path(char *path, size_t max_path_size) {
+  ctt_dir_path(path, max_path_size);
+  strlcat(path, "/.lock", max_path_size);
 }
 
 int initialize_ctt_dirs() {
   int errno;
 
-  char *cfg_path = ctt_cfg_path();
-  errno = create_dir_if_not_exist(cfg_path);
-  free(cfg_path);
-  if (errno != 0) {
-    return errno;
-  }
+  char cfg_path[MAX_PATH_SIZE];
+  ctt_dir_path(cfg_path, MAX_PATH_SIZE);
 
-  char *data_path = ctt_data_path();
-  errno = create_dir_if_not_exist(data_path);
-  free(data_path);
+  errno = create_dir_if_not_exist(cfg_path);
   return errno;
+}
+
+static void ctt_dir_path(char *path, size_t max_path_size) {
+  char *home = getenv("HOME");
+  strlcat(path, home, max_path_size);
+  strlcat(path, "/.local/share/ctt", max_path_size);
 }
 
 static int create_dir_if_not_exist(char *path) {

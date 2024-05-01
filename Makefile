@@ -1,6 +1,6 @@
 PROJECT=ctt
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -O2
 
 TARGET_DIR=target
 OBJ_DIR=$(TARGET_DIR)/obj

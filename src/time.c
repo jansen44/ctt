@@ -1,14 +1,50 @@
 #include "time.h"
 
-long time_diff_min(struct timespec *start, struct timespec *end) {
-  return (end->tv_sec - start->tv_sec) / 60;
+struct fmt_time {
+  int h;
+  int m;
+  int s;
+  int ms;
+};
+
+static struct fmt_time fmt_from_s(time_t secs);
+
+struct timespec now() {
+  struct timespec nowspec;
+  clock_gettime(CLOCK_REALTIME, &nowspec);
+  return nowspec;
 }
 
-long time_diff_s(struct timespec *start, struct timespec *end) {
-  return (end->tv_sec - start->tv_sec);
+time_t now_in_millis() {
+  struct timespec nowspec = now();
+  return time_in_millis(&nowspec);
 }
 
-long time_diff_ms(struct timespec *start, struct timespec *end) {
-  return ((end->tv_sec - start->tv_sec) * 1000) +
-         ((end->tv_nsec - start->tv_nsec) / 1000000);
+time_t time_in_millis(struct timespec *spec) {
+  return spec->tv_sec * 1000 + spec->tv_nsec / 1000000;
+}
+
+time_t time_diff_min(time_t start, time_t end) {
+  return time_diff_s(start, end) / 60;
+}
+
+time_t time_diff_s(time_t start, time_t end) {
+  return time_diff_ms(start, end) / 1000;
+}
+
+time_t time_diff_ms(time_t start, time_t end) { return end - start; }
+
+void fmt_secs_to_str(time_t secs, char *dst) {
+  struct fmt_time fmt = fmt_from_s(secs);
+  sprintf(dst, "%02d:%02d:%02d", fmt.h, fmt.m, fmt.s);
+}
+
+static struct fmt_time fmt_from_s(time_t secs) {
+  struct fmt_time fmt_time = {
+      .h = secs / 60 / 60,
+      .m = (secs / 60) % 60,
+      .s = secs % 60,
+      .ms = 0,
+  };
+  return fmt_time;
 }
