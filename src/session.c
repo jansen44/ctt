@@ -59,6 +59,43 @@ int complete_session(struct session *session) {
   return 0;
 }
 
+int show_session_history() {
+  struct history history = {0};
+  char history_path[MAX_PATH_SIZE] = {0};
+  get_history_path(history_path, MAX_PATH_SIZE);
+
+  int output = get_history(history_path, &history);
+  if (output != 0) {
+    return output;
+  }
+
+  for (int i = 0; i < history.history_len; i++) {
+    struct history_item curr = history.items[i];
+
+    time_t duration = curr.duration;
+    char session_time_output[9] = {0};
+    fmt_secs_to_str(duration, session_time_output);
+
+    long created_at_s = curr.initialized_at / 1000;
+    struct tm created_at_tm = {0};
+    localtime_r(&created_at_s, &created_at_tm);
+    char session_init_time_output[22] = {0};
+    fmt_tm_to_str(&created_at_tm, session_init_time_output);
+
+    long finished_at_s = curr.finished_at / 1000;
+    struct tm finished_at_tm = {0};
+    localtime_r(&finished_at_s, &finished_at_tm);
+    char session_finished_time_output[22] = {0};
+    fmt_tm_to_str(&finished_at_tm, session_finished_time_output);
+
+    printf("%s (%s -> %s)\n", session_time_output, session_init_time_output,
+           session_finished_time_output);
+  }
+  printf("\n");
+
+  return 0;
+}
+
 /**
  * Returns session duration in secs
  */

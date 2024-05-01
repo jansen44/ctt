@@ -2,10 +2,14 @@
 #define _CTT_HISTORY_
 
 #include "os.h"
+#include "time.h"
 
+#include <stdlib.h>
 #include <sys/errno.h>
 
 #define MAX_HISTORY_LINE_SIZE 100
+
+#define ERR_HISTORY_FILE_NOT_FOUND 10
 
 struct history_item {
   time_t initialized_at;
@@ -14,10 +18,12 @@ struct history_item {
 };
 
 struct history {
-  struct history_item *history;
+  struct history_item *items;
+  size_t history_len;
+  size_t cap;
 };
 
-struct history get_history(char *history_path);
+int get_history(char *history_path, struct history *history);
 int append_history_item(char *history_path, struct history_item *item);
 void get_history_path(char *path, size_t max_path_size);
 

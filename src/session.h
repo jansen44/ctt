@@ -22,4 +22,6 @@ sessionresp_t get_or_init_session(struct session *session);
 void session_report(struct session *session);
 int complete_session(struct session *session);
 
+int show_session_history();
+
 #endif
