@@ -14,6 +14,7 @@ time_t time_diff_min(time_t start, time_t end);
 time_t time_diff_s(time_t start, time_t end);
 time_t time_diff_ms(time_t start, time_t end);
 
+void fmt_tm_to_str(struct tm *tm, char *dst);
 void fmt_secs_to_str(time_t secs, char *dst);
 
 #endif

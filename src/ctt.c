@@ -1,10 +1,12 @@
 #include "cli.h"
 #include "os.h"
 #include "session.h"
+#include "time.h"
 
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+
   struct ctt_cmds cmds = {0};
   int cli_err = init_cli(argc, argv, &cmds);
   if (cli_err != 0) {
