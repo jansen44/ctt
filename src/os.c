@@ -11,7 +11,7 @@ void ctt_lock_path(char *path, size_t max_path_size) {
 int initialize_ctt_dirs() {
   int errno;
 
-  char cfg_path[MAX_PATH_SIZE];
+  char cfg_path[MAX_PATH_SIZE] = {0};
   ctt_dir_path(cfg_path, MAX_PATH_SIZE);
 
   errno = create_dir_if_not_exist(cfg_path);
